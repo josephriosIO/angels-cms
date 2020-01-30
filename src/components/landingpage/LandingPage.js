@@ -120,6 +120,7 @@ const LandingPage = () => {
         }
       } catch (err) {
         console.error(err);
+        setRoles([]);
       }
     };
     fetchData();
@@ -127,12 +128,12 @@ const LandingPage = () => {
 
   if (isAuthenticated && roles === undefined) return null;
 
-  if (isAuthenticated && !roles?.STARTUP) {
-    return <Redirect to='/angels' />;
-  }
-
   if (isAuthenticated && roles?.STARTUP) {
     return <Redirect to='/startups' />;
+  }
+
+  if (isAuthenticated && !roles?.STARTUP) {
+    return <Redirect to='/angels' />;
   }
 
   return (
