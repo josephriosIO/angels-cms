@@ -17,7 +17,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "dev": "nodemon index.js"
+    "server": "nodemon index.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
