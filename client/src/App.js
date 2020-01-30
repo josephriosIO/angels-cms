@@ -8,6 +8,7 @@ import StartupRoutes from './components/startups/Routes';
 
 function App() {
   const { loading } = useAuth0();
+  //test
 
   if (loading) {
     return <div>Loading...</div>;
