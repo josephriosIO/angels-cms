@@ -12,33 +12,30 @@ if (!process.env.ADMIN_EMAIL) {
   throw new Error('Make sure you have ADMIN_EMAIL in your .env file');
 }
 
-// Create a new Express app
-const app = express();
+// Create a new Express server
+const server = express();
 
 //connect database
 connectDB();
 
-app.use(cors());
-app.use(express.json({ extended: false }));
+server.use(cors());
+server.use(express.json({ extended: false }));
 
-// Serve static files from the React frontend app
-app.use(express.static(path.join(__dirname, 'client/build')));
+// Serve static files from the React frontend server
+server.use(express.static(path.join(__dirname, 'client/build')));
 
 //use the /users router file
-app.use('/api/auth', authRoute);
+server.use('/api/auth', authRoute);
 //use the /profile router file
-app.use('/api/profile', profileRoute);
+server.use('/api/profile', profileRoute);
 //use the /admin router file
-app.use('/api/admin', adminRoute);
+server.use('/api/admin', adminRoute);
 //use the /admin router file
-app.use('/api/user', userRoute);
+server.use('/api/user', userRoute);
 
 // Anything that doesn't match the above, send back index.html
-app.get('*', (req, res) => {
+server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
-const port = process.env.PORT || 3001;
-
-// Start the app
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+module.exports = server;
