@@ -11,12 +11,6 @@ const Protected = ({ component: Component, path, ...rest }) => {
     const fetchData = async () => {
       try {
         const token = await getTokenSilently();
-        await axios('/api/auth/createOrGetUser', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
         const userRoles = await axios('/api/auth/getroles', {
           headers: {
             Authorization: `Bearer ${token}`,

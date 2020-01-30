@@ -154,6 +154,12 @@ const Navbar = () => {
     const fetchData = async () => {
       try {
         const token = await getTokenSilently();
+        await axios('/api/auth/createOrGetUser', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
         const userRoles = await axios('/api/auth/getroles', {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -344,7 +350,14 @@ const Navbar = () => {
                   >
                     <MenuItem>Profile</MenuItem>
                   </Link>
-                  <p className={classes.link} onClick={() => logout()}>
+                  <p
+                    className={classes.link}
+                    onClick={() =>
+                      logout({
+                        returnTo: window.location.origin.toString(),
+                      })
+                    }
+                  >
                     <MenuItem>Logout</MenuItem>
                   </p>
                 </div>

@@ -166,7 +166,9 @@ const LandingPage = () => {
           </p>
           <ColorButton
             onClick={() =>
-              loginWithRedirect(`${window.location.origin.toString()}/startups`)
+              loginWithRedirect({
+                redirect_uri: `${window.location.origin.toString()}/startups`,
+              })
             }
           >
             Login As Startup
@@ -188,7 +190,11 @@ const LandingPage = () => {
           <p>A member of our Capitalist Kibbutz.</p>
           <ColorButton
             onClick={() =>
-              loginWithRedirect(`${window.location.origin.toString()}/angels`)
+              loginWithRedirect(
+                loginWithRedirect({
+                  redirect_uri: `${window.location.origin.toString()}/angels`,
+                }),
+              )
             }
           >
             Member Login

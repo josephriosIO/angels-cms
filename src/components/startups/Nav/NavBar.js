@@ -147,7 +147,14 @@ const Navbar = () => {
                 >
                   <MenuItem>Profile</MenuItem>
                 </Link>
-                <p className={classes.link} onClick={() => logout()}>
+                <p
+                  className={classes.link}
+                  onClick={() =>
+                    logout({
+                      returnTo: window.location.origin.toString(),
+                    })
+                  }
+                >
                   <MenuItem>Logout</MenuItem>
                 </p>
               </div>

@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 import { useAuth0 } from '../../../react-auth0-spa';
+import './style.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
