@@ -1,0 +1,151 @@
+import React, { useEffect, useState } from 'react';
+import { useAuth0 } from '../../../react-auth0-spa';
+import { Redirect } from 'react-router-dom';
+import DashboardAngelsList from './DashboardAngelsList';
+import SearchBar from '../HelperComponents/SearchBar';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import EmptyState from '../EmptyStates/EmptyState';
+import axios from 'axios';
+
+const useStyles = makeStyles(theme => ({
+  heroContent: {
+    marginTop: '60px',
+    padding: '64px 25px',
+    [theme.breakpoints.down('md')]: {
+      marginTop: '30px',
+    },
+  },
+}));
+
+export default function Dashboard({ userRoles }) {
+  const [users, setUsers] = useState([]);
+  const [userData, setUserData] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const classes = useStyles();
+
+  const { loading, user, getTokenSilently } = useAuth0();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await getTokenSilently();
+        const test = await axios('/api/user/getAngels', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUsers(test.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, [userRoles]);
+
+  if (loading || !user) {
+    return <div>Loading...</div>;
+  }
+
+  const search = e => {
+    if (e.target.value.length < 2) {
+      setFilter([]);
+      return null;
+    }
+    const filteredUsers = users.filter(user => {
+      if (user.name.toLowerCase().includes(e.target.value)) {
+        return user;
+      }
+
+      return null;
+    });
+
+    setFilter(filteredUsers);
+  };
+
+  if (!userRoles.ADMIN && !userRoles.ANGEL) {
+    return (
+      <EmptyState
+        title={'Thank you for your request!'}
+        subtitle={
+          'An Admin will accept you shortly if you meet the requirements.'
+        }
+        roles={userRoles}
+      />
+    );
+  }
+
+  if (users === undefined) {
+    return null;
+  }
+
+  if (userRoles.ADMIN) {
+    return (
+      <>
+        <CssBaseline />
+        <Container
+          maxWidth='lg'
+          component='main'
+          className={classes.heroContent}
+        >
+          {users.length > 0 ? (
+            <div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
+                }}
+              >
+                <p style={{ textAlign: 'center', textTransform: 'uppercase' }}>
+                  Community Members
+                </p>
+                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                  <SearchBar search={search} title={'Name'} />
+                </div>
+              </div>
+
+              <DashboardAngelsList
+                angels={filter.length > 0 ? filter : users}
+              />
+            </div>
+          ) : (
+            <EmptyState
+              title={'Admin View'}
+              subtitle={'Accept some angels.'}
+              roles={userRoles}
+            />
+          )}
+        </Container>
+      </>
+    );
+  }
+
+  if (userData !== undefined && !userData.editedProfile) {
+    return <Redirect to={`/angels/profile/${userData.id}`} />;
+  }
+
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth='lg' component='main' className={classes.heroContent}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+          }}
+        >
+          <p style={{ textAlign: 'center', textTransform: 'uppercase' }}>
+            Community Members
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <SearchBar search={search} title={'Name'} />
+          </div>
+        </div>
+        <DashboardAngelsList angels={filter.length > 0 ? filter : users} />
+      </Container>
+    </React.Fragment>
+  );
+}
