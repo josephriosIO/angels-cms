@@ -7,6 +7,7 @@ const profileRoute = require('./routes/profileRoute');
 const adminRoute = require('./routes/adminRoute');
 const userRoute = require('./routes/userRoute');
 require('dotenv').config();
+const path = require('path');
 
 const checkJwt = middleware.checkJwt;
 
@@ -22,6 +23,13 @@ connectDB();
 
 app.use(cors());
 app.use(express.json({ extended: false }));
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'client/build')));
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 //use the /users router file
 app.use('/api/auth', authRoute);

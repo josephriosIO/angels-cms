@@ -17,7 +17,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
-    "http-proxy-middleware": "^0.20.0",
     "jwks-rsa": "^1.6.2",
     "mongoose": "^5.8.10",
     "npm-run-all": "^4.1.5",
@@ -33,6 +32,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     "spa": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -57,5 +57,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }
