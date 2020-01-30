@@ -96,7 +96,7 @@ const VotingSystem = ({ users }) => {
       setStartups(result.data);
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently, users]);
 
   const setUserVotesToState = (vote, startup) => {
     setUserVote({ userVote: vote, startup: startup });

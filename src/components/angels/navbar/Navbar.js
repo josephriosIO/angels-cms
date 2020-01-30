@@ -172,7 +172,7 @@ const Navbar = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently]);
 
   if (loading || !user) {
     return <div>Loading...</div>;

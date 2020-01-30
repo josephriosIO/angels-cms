@@ -60,7 +60,7 @@ const DisplayUsers = props => {
       });
     };
     fetchData();
-  }, [user.authId]);
+  }, [user.authId, getTokenSilently]);
 
   const { admin, angel } = state;
 

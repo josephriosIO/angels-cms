@@ -147,7 +147,7 @@ export default function SeeStartups({ userRoles }) {
       }
     };
     fetchData();
-  }, [userRoles]);
+  }, [userRoles, getTokenSilently]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

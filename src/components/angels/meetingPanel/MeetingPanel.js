@@ -124,22 +124,27 @@ const MeetingPanel = ({ users, roles }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const date = users.date;
-      const token = await getTokenSilently();
-      const result = await axios.post(
-        '/api/user/canvote',
-        { date },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      try {
+        const date = users.date;
+        const token = await getTokenSilently();
+        const result = await axios.post(
+          '/api/user/canvote',
+          { date },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        },
-      );
+        );
 
-      setVote(result.data);
+        setVote(result.data);
+      } catch (err) {
+        console.log(err);
+        setIsVoting(false);
+      }
     };
     fetchData();
-  }, [users]);
+  }, [users, getTokenSilently]);
 
   const handleClickOpen = () => {
     setOpen(true);

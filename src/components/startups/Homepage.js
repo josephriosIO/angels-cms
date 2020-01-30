@@ -27,7 +27,7 @@ const HomePage = () => {
       setUser(user.data);
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently]);
 
   //use new component to display all items from startup profile CHECK
   //have an edit button which will take you to Profile.js component || in navbar?

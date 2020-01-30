@@ -62,7 +62,7 @@ const StartupProfile = ({ item }) => {
       setUserData(usersRoles.data);
     };
     fetchData();
-  }, [item.authId]);
+  }, [item.authId, getTokenSilently]);
 
   return (
     <div>

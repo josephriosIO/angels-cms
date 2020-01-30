@@ -119,7 +119,7 @@ const AdminMeetingPanel = props => {
       }
     };
     fetchData();
-  }, [props]);
+  }, [props, getTokenSilently]);
 
   const handleChangePage = (e, newPage) => {
     setPage(newPage);

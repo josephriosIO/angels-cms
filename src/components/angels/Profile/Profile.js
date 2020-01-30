@@ -42,7 +42,7 @@ const Profile = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently]);
 
   const handleClick = () => {
     setOpen(true);
@@ -60,7 +60,7 @@ const Profile = () => {
     event.preventDefault();
     try {
       const token = await getTokenSilently();
-      const test = await axios.post(
+      await axios.post(
         `/api/profile/`,
         {
           form,

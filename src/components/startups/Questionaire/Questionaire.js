@@ -102,7 +102,7 @@ const Questionaire = () => {
       });
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently]);
 
   const handleClick = () => {
     setOpen(true);

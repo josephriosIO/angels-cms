@@ -124,7 +124,7 @@ const LandingPage = () => {
       }
     };
     fetchData();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, getTokenSilently]);
 
   if (isAuthenticated && roles === undefined) return null;
 

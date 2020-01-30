@@ -89,7 +89,7 @@ const AdminPage = props => {
   const [copySuccess, setCopySuccess] = useState('');
   const textAreaRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const { loading, user, getTokenSilently } = useAuth0();
+  const { getTokenSilently } = useAuth0();
 
   const handleClick = () => {
     setOpen(true);
@@ -133,7 +133,7 @@ const AdminPage = props => {
       }
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently]);
 
   const handleChangePage = (e, newPage) => {
     setPage(newPage);

@@ -23,7 +23,7 @@ const Protected = ({ component: Component, path, ...rest }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently]);
 
   if (isAuthenticated === undefined) return null;
 

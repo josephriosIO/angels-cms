@@ -38,7 +38,7 @@ const AngelUserDisplay = ({ value, column, votes }) => {
       }
     };
     fetchData();
-  }, [value]);
+  }, [value, getTokenSilently]);
 
   return (
     <TableCell key={column.id} align={column.align}>

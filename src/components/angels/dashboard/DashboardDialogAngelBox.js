@@ -71,7 +71,7 @@ const DashboardDialogAngelBox = ({ angel }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently, angel]);
 
   const handleClickOpen = () => {
     setOpen(true);

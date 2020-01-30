@@ -165,7 +165,7 @@ const EditMeeting = props => {
       }
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently, props]);
 
   const handleChange = dateSubmited => {
     setMeeting({ ...meeting, startDate: dateSubmited });

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '../../../react-auth0-spa';
-import { Redirect } from 'react-router-dom';
 import DashboardAngelsList from './DashboardAngelsList';
 import SearchBar from '../HelperComponents/SearchBar';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,7 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard({ userRoles }) {
   const [users, setUsers] = useState([]);
-  const [userData, setUserData] = useState([]);
   const [filter, setFilter] = useState([]);
   const classes = useStyles();
 
@@ -42,7 +40,7 @@ export default function Dashboard({ userRoles }) {
       }
     };
     fetchData();
-  }, [userRoles]);
+  }, [userRoles, getTokenSilently]);
 
   if (loading || !user) {
     return <div>Loading...</div>;
@@ -120,10 +118,6 @@ export default function Dashboard({ userRoles }) {
         </Container>
       </>
     );
-  }
-
-  if (userData !== undefined && !userData.editedProfile) {
-    return <Redirect to={`/angels/profile/${userData.id}`} />;
   }
 
   return (

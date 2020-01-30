@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -9,8 +8,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { NavLink, Link } from 'react-router-dom';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
-import axios from 'axios';
 import { useAuth0 } from '../../../react-auth0-spa';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -50,16 +49,24 @@ const Navbar = () => {
     logout,
     loginWithRedirect,
     isAuthenticated,
-    loading,
   } = useAuth0();
   const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      // const result = await axios('/api/auth/createOrGetStartup');
+      try {
+        const token = await getTokenSilently();
+        await axios('/api/auth/createOrGetStartup', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently]);
 
   const handleClick = event => {
     setAnchorEl(anchorEl ? null : event.currentTarget);

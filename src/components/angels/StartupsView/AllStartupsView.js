@@ -168,7 +168,7 @@ const AllStartupsView = ({ userRoles }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently, userRoles]);
 
   if (userRoles === undefined) return null;
 

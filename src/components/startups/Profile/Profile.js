@@ -110,7 +110,6 @@ const Profile = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [errorStatus, setErrorStatus] = useState('');
   const [formProfile, setProfile] = useState({});
-  const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     companyName: '',
     location: '',
@@ -145,7 +144,7 @@ const Profile = () => {
       });
     };
     fetchData();
-  }, []);
+  }, [getTokenSilently]);
 
   const handleClick = () => {
     setOpen(true);
@@ -175,13 +174,11 @@ const Profile = () => {
       setErrorMsg('Saved.');
       setErrorStatus('success');
       handleClick();
-      setSubmitted(true);
     } catch (err) {
       console.log(err);
       setErrorMsg('error.');
       setErrorStatus('danger');
       handleClick();
-      setSubmitted(true);
     }
   };
 
