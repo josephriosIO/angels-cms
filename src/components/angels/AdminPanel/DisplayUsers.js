@@ -144,6 +144,6 @@ const DisplayUsers = props => {
       </Grid>
     </Grid>
   );
-};
+}; // not
 
 export default DisplayUsers;
