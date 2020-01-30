@@ -19,9 +19,6 @@
     "heroku-postbuild": "cd client && npm install && npm run build",
     "dev": "nodemon server.js"
   },
-  "engines": {
-    "node": "12.9.1"
-  },
   "devDependencies": {
     "nodemon": "^2.0.2"
   }
