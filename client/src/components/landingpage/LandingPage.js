@@ -191,11 +191,9 @@ const LandingPage = () => {
           <p>A member of our Capitalist Kibbutz.</p>
           <ColorButton
             onClick={() =>
-              loginWithRedirect(
-                loginWithRedirect({
-                  redirect_uri: `${window.location.origin.toString()}/angels`,
-                }),
-              )
+              loginWithRedirect({
+                redirect_uri: `${window.location.origin.toString()}/angels`,
+              })
             }
           >
             Member Login
