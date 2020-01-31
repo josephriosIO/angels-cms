@@ -76,7 +76,7 @@ router.get('/allstartups', checkJwt, async (req, res) => {
     });
 
     if (userIds.length < 1) {
-      return [];
+      return res.status(200).json([]);
     }
 
     const usersQuery = await StartupsProfile.find({});
@@ -180,7 +180,7 @@ router.get('/archivedstartups', checkJwt, async (req, res) => {
     });
 
     if (userIds.length < 1) {
-      return [];
+      return res.status(200).json([]);
     }
 
     const usersQuery = await StartupsProfile.find({});
@@ -219,7 +219,7 @@ router.get('/vettedstartups', checkJwt, async (req, res) => {
     });
 
     if (userIds.length < 1) {
-      return [];
+      return res.status(200).json([]);
     }
 
     const usersQuery = await StartupsProfile.find({});
@@ -260,7 +260,7 @@ router.get('/users', checkJwt, async (req, res) => {
     });
 
     if (userIds.length < 1) {
-      return [];
+      return res.status(200).json([]);
     }
 
     const usersQuery = await User.find({});

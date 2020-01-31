@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dashboard({ userRoles }) {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(undefined);
   const [filter, setFilter] = useState([]);
   const classes = useStyles();
 
@@ -29,13 +29,16 @@ export default function Dashboard({ userRoles }) {
     const fetchData = async () => {
       try {
         const token = await getTokenSilently();
+
         const test = await axios('/api/user/getAngels', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+
         setUsers(test.data);
       } catch (err) {
+        setUsers([]);
         console.error(err);
       }
     };
@@ -62,6 +65,10 @@ export default function Dashboard({ userRoles }) {
     setFilter(filteredUsers);
   };
 
+  console.log(userRoles);
+
+  if (userRoles.length < 1 || users === undefined) return null;
+
   if (!userRoles.ADMIN && !userRoles.ANGEL) {
     return (
       <EmptyState
@@ -72,10 +79,6 @@ export default function Dashboard({ userRoles }) {
         roles={userRoles}
       />
     );
-  }
-
-  if (users === undefined) {
-    return null;
   }
 
   if (userRoles.ADMIN) {

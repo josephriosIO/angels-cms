@@ -80,8 +80,8 @@ const AdminPage = props => {
   const [errorMsg, setErrorMsg] = useState('');
   const [errorStatus, setErrorStatus] = useState('');
   const [filter, setFilter] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [invite, setInvite] = useState({});
+  const [users, setUsers] = useState(undefined);
+  const [invite, setInvite] = useState(undefined);
   const classes = useStyles();
   const url = window.location.href;
   const urlArr = url.split('/');
@@ -114,26 +114,32 @@ const AdminPage = props => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const token = await getTokenSilently();
-      const result = await axios('/api/admin/users', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const createdInvite = await axios('/api/admin/createinvite', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      try {
+        const token = await getTokenSilently();
+        const result = await axios('/api/admin/users', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const createdInvite = await axios('/api/admin/createinvite', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      setInvite(createdInvite.data);
+        setInvite(createdInvite.data);
 
-      if (result) {
-        setUsers(result.data);
+        if (result) {
+          setUsers(result.data);
+        }
+      } catch (err) {
+        console.log(err);
       }
     };
     fetchData();
   }, [getTokenSilently]);
+
+  if (users === undefined || invite === undefined) return null;
 
   const handleChangePage = (e, newPage) => {
     setPage(newPage);
