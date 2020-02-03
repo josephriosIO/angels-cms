@@ -20,7 +20,9 @@ const UserRoles = {
 
 router.get('/getAngel/profile/:id', checkJwt, async (req, res) => {
   try {
+    console.log(req.params.id);
     let profile = await AngelsProfile.findOne({ authId: req.params.id });
+    console.log(profile);
 
     return res.json(profile);
   } catch (err) {

@@ -203,7 +203,7 @@ const MeetingPanel = ({ users, roles }) => {
                 <div className={classes.itemHolder}>
                   {roles.ADMIN && !vote ? (
                     <Link
-                      to={`/angels/editmeeting/${users.meetingId}`}
+                      to={`/community/editmeeting/${users.meetingId}`}
                       className={classes.checkVotesLink}
                     >
                       Edit
@@ -214,7 +214,7 @@ const MeetingPanel = ({ users, roles }) => {
                     <Tooltip title='View Votes' arrow placement='left'>
                       <Link
                         to={{
-                          pathname: `/angels/meeting/${users.meetingId}`,
+                          pathname: `/community/meeting/${users.meetingId}`,
                           meeting: { id: users.meetingId },
                         }}
                         className={classes.checkVotesLink}

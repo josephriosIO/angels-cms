@@ -10,6 +10,15 @@ import Dialog from '@material-ui/core/Dialog';
 import axios from 'axios';
 import EmailIcon from '@material-ui/icons/Email';
 import { useAuth0 } from '../../../react-auth0-spa';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import DashboardTable from './DashboardTable';
 
 const useStyles = makeStyles(theme => ({
   angelContainer: {
@@ -49,11 +58,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const DashboardDialogAngelBox = ({ angel }) => {
+const DashboardDialogAngelBox = ({ angel, angels }) => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
   const [angelInfo, setAngelInfo] = useState({});
   const { getTokenSilently } = useAuth0();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,81 +91,88 @@ const DashboardDialogAngelBox = ({ angel }) => {
   const handleClose = value => {
     setOpen(false);
   };
+
   return (
-    <>
-      <Dialog
-        fullWidth
-        maxWidth='xs'
-        onClose={handleClose}
-        aria-labelledby='simple-dialog-title'
-        open={open}
-        className={classes.dialog}
-      >
-        <List>
-          <ListItem
-            disableGutters
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'flex-end',
-              margin: 0,
-              padding: 0,
-            }}
-          >
-            <i
-              onClick={handleClose}
-              className={`fas fa-times fa-lg ${classes.icon}`}
-            ></i>
-          </ListItem>
-
-          <ListItem className={classes.center}>
-            <Avatar
-              className={classes.avatarResize}
-              src={angel.profileImg}
-              alt={angel.name}
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              className={classes.center}
-              primary={`${angel.name}`}
-            />
-          </ListItem>
-
-          <ListItem>
-            <ListItemText primary={`Bio: ${angelInfo?.bio}`} />
-          </ListItem>
-
-          <ListItem className={classes.center}>
-            <Button href={`tel: ${angelInfo?.phoneNumber}`}>
-              <PhoneIcon />
-            </Button>
-            <Button href={`mailto: ${angel.email}`}>
-              <EmailIcon />
-            </Button>
-          </ListItem>
-        </List>
-      </Dialog>
-      <>
-        <div className={classes.angelContainer}>
-          <Avatar
-            onClick={handleClickOpen}
-            className={classes.avatarResize}
-            src={angel.profileImg}
-            alt={angel.name}
-          />
-          <span
-            style={{
-              textAlign: 'center',
-              marginTop: '10px',
-            }}
-          >
-            {angel.name}
-          </span>
-        </div>
-      </>
-    </>
+    <TableRow hover role='checkbox'>
+      <DashboardTable angel={angel} angelInfo={angelInfo} />
+    </TableRow>
   );
+
+  // return (
+  //   <>
+  //     <Dialog
+  //       fullWidth
+  //       maxWidth='xs'
+  //       onClose={handleClose}
+  //       aria-labelledby='simple-dialog-title'
+  //       open={open}
+  //       className={classes.dialog}
+  //     >
+  //       <List>
+  //         <ListItem
+  //           disableGutters
+  //           style={{
+  //             display: 'flex',
+  //             alignItems: 'flex-end',
+  //             justifyContent: 'flex-end',
+  //             margin: 0,
+  //             padding: 0,
+  //           }}
+  //         >
+  //           <i
+  //             onClick={handleClose}
+  //             className={`fas fa-times fa-lg ${classes.icon}`}
+  //           ></i>
+  //         </ListItem>
+
+  //         <ListItem className={classes.center}>
+  //           <Avatar
+  //             className={classes.avatarResize}
+  //             src={angel.profileImg}
+  //             alt={angel.name}
+  //           />
+  //         </ListItem>
+  //         <ListItem>
+  //           <ListItemText
+  //             className={classes.center}
+  //             primary={`${angel.name}`}
+  //           />
+  //         </ListItem>
+
+  //         <ListItem>
+  //           <ListItemText primary={`Bio: ${angelInfo?.bio}`} />
+  //         </ListItem>
+
+  //         <ListItem className={classes.center}>
+  //           <Button href={`tel: ${angelInfo?.phoneNumber}`}>
+  //             <PhoneIcon />
+  //           </Button>
+  //           <Button href={`mailto: ${angel.email}`}>
+  //             <EmailIcon />
+  //           </Button>
+  //         </ListItem>
+  //       </List>
+  //     </Dialog>
+  //     <>
+  //       <div className={classes.angelContainer}>
+  //         <Avatar
+  //           onClick={handleClickOpen}
+  //           className={classes.avatarResize}
+  //           src={angel.profileImg}
+  //           alt={angel.name}
+  //         />
+  //         <span
+  //           style={{
+  //             textAlign: 'center',
+  //             marginTop: '10px',
+  //           }}
+  //         >
+  //           {angel.name}
+  //         </span>
+  //       </div>
+  //     </>
+  //   </>
+  // );
 };
 
 export default DashboardDialogAngelBox;

@@ -37,7 +37,7 @@ function App() {
   return (
     <ConfirmProvider>
       <Switch>
-        <Route path='/angels' component={Routes} />
+        <Route path='/community' component={Routes} />
         <Route path='/startups' component={StartupRoutes} />
         <Route exact path={`/invite/:id`} component={AngelInvite} />
         <Route exact path='/' component={LandingPage} />

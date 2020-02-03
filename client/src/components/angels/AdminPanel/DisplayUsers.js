@@ -104,10 +104,6 @@ const DisplayUsers = props => {
             <label>Email:</label>
             <p>{user.email}</p>
           </div>
-          <div className={classes.userInfo}>
-            <label>Location:</label>
-            <p>{`${user.location === '' ? 'N/A' : user.location}`}</p>
-          </div>
 
           <div className={classes.flex}>
             <FormControlLabel
@@ -138,7 +134,7 @@ const DisplayUsers = props => {
                   }}
                 />
               }
-              label='Angel'
+              label='Community Member'
             />
           </div>
         </div>

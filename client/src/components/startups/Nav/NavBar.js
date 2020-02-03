@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
     textDecoration: 'none',
     fontSize: '.9rem',
     color: 'black',
+    '*:focus': {
+      outline: 0,
+      outline: 'none',
+    },
   },
 }));
 

@@ -57,6 +57,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: '.9rem',
     color: 'black !important',
     cursor: 'pointer',
+    '*:focus': {
+      outline: 0,
+      outline: 'none',
+    },
 
     '&:hover': {
       textDecoration: 'none',
@@ -66,6 +70,10 @@ const useStyles = makeStyles(theme => ({
     marginRight: '20px',
     textDecoration: 'none !important',
     color: 'black',
+    '*:focus': {
+      outline: 0,
+      outline: 'none',
+    },
 
     '&:hover': {
       textShadow: '0 0 .45px #333, 0 0 .45px #333',
@@ -198,7 +206,7 @@ const Navbar = () => {
                 className={`${classes.link} ${classes.navLinkStyle}`}
                 exact
                 to={{
-                  pathname: `/angels`,
+                  pathname: `/community`,
                 }}
               >
                 Community
@@ -213,7 +221,7 @@ const Navbar = () => {
                   className={`${classes.link} ${classes.navLinkStyle}`}
                   exact
                   to={{
-                    pathname: `/angels/admin`,
+                    pathname: `/community/admin`,
                   }}
                 >
                   Admin
@@ -225,7 +233,7 @@ const Navbar = () => {
                   className={`${classes.link} ${classes.navLinkStyle}`}
                   exact
                   to={{
-                    pathname: `/angels/startups`,
+                    pathname: `/community/startups`,
                   }}
                 >
                   Startups
@@ -237,7 +245,7 @@ const Navbar = () => {
             <NavLink
               activeStyle={{ fontWeight: 'bold' }}
               className={classes.navLinkStyle}
-              to={`/angels/meetings`}
+              to={`/community/meetings`}
             >
               <p className={classes.link}> Meetings</p>
             </NavLink>
@@ -257,7 +265,7 @@ const Navbar = () => {
           <div className={classes.logo}>
             <Link
               style={{ textDecoration: 'none', color: 'black' }}
-              to='/angels'
+              to='/community'
             >
               <div
                 style={{
@@ -293,7 +301,7 @@ const Navbar = () => {
                     className={`${classes.link} ${classes.navLinkStyle}`}
                     exact
                     to={{
-                      pathname: `/angels`,
+                      pathname: `/community`,
                     }}
                   >
                     Community
@@ -306,7 +314,7 @@ const Navbar = () => {
                       className={`${classes.link} ${classes.navLinkStyle}`}
                       exact
                       to={{
-                        pathname: `/angels/admin`,
+                        pathname: `/community/admin`,
                       }}
                     >
                       Admin
@@ -316,7 +324,7 @@ const Navbar = () => {
                       className={`${classes.link} ${classes.navLinkStyle}`}
                       exact
                       to={{
-                        pathname: `/angels/startups`,
+                        pathname: `/community/startups`,
                       }}
                     >
                       Startups
@@ -326,7 +334,7 @@ const Navbar = () => {
                 <NavLink
                   activeStyle={{ fontWeight: 'bold' }}
                   className={classes.navLinkStyle}
-                  to={`/angels/meetings`}
+                  to={`/community/meetings`}
                 >
                   <p className={classes.link}> Meetings</p>
                 </NavLink>
@@ -346,7 +354,7 @@ const Navbar = () => {
                   <Link
                     style={{ textDecoration: 'none', color: 'black' }}
                     className={classes.link}
-                    to={`/angels/profile/${user.sub}`}
+                    to={`/community/profile/${user.sub}`}
                   >
                     <MenuItem>Profile</MenuItem>
                   </Link>
