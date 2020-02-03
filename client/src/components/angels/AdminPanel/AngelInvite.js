@@ -80,7 +80,7 @@ const AngelInvite = props => {
     doInviteThings();
   }
   if (consumed) {
-    return <Redirect to='/angels' />;
+    return <Redirect to='/community' />;
   }
 
   if (!consumed) {
