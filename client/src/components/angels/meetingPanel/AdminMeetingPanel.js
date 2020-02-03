@@ -153,7 +153,7 @@ const AdminMeetingPanel = props => {
   }
 
   if (reload) {
-    return <Redirect to='/angels/meetings' />;
+    return <Redirect to='/community/meetings' />;
   }
 
   if (meeting.length < 1 || startups.length < 1) {

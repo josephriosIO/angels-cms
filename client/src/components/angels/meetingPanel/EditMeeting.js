@@ -267,7 +267,7 @@ const EditMeeting = props => {
     );
 
     setTimeout(function() {
-      props.history.push('/angels/meetings');
+      props.history.push('/community/meetings');
     }, 3000);
   };
 

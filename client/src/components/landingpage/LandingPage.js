@@ -134,7 +134,7 @@ const LandingPage = () => {
   }
 
   if (isAuthenticated && !roles?.STARTUP) {
-    return <Redirect to='/angels' />;
+    return <Redirect to='/community' />;
   }
 
   return (
@@ -192,7 +192,7 @@ const LandingPage = () => {
           <ColorButton
             onClick={() =>
               loginWithRedirect({
-                redirect_uri: `${window.location.origin.toString()}/angels`,
+                redirect_uri: `${window.location.origin.toString()}/community`,
               })
             }
           >

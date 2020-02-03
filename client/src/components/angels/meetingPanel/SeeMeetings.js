@@ -215,7 +215,7 @@ export default function SeeStartups({ userRoles }) {
                     <Link
                       className={classes.link}
                       to={{
-                        pathname: `/angels/createmeeting`,
+                        pathname: `/community/createmeeting`,
                       }}
                     >
                       <AddCircleIcon />
