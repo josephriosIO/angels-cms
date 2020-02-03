@@ -151,8 +151,8 @@ const MeetingCreator = props => {
   };
 
   const startupsInMeeting = startup => {
-    const ids = createdMeeting.map(startups => startups.id);
-    if (ids.includes(startup.id)) {
+    const ids = createdMeeting.map(startups => startups.authId);
+    if (ids.includes(startup.authId)) {
       return;
     }
     setCreatedMeeting([...createdMeeting, startup]);

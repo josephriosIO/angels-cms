@@ -237,6 +237,11 @@ const AllStartupsView = ({ userRoles }) => {
       },
     });
     if (removed) {
+      const index = users.indexOf(startup);
+      if (index > -1) {
+        users.splice(index, 1);
+      }
+      setUsers([...users]);
       setErrorMsg('Startup Deleted from list.');
       setErrorStatus('success');
       handleClick();
@@ -344,9 +349,9 @@ const AllStartupsView = ({ userRoles }) => {
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage,
                       )
-                      .map(row => (
+                      .map((row, idx) => (
                         <AllStartupsViewTable
-                          key={row.id}
+                          key={idx}
                           user={row}
                           removeStartupById={removeStartupById}
                           archived={archive}

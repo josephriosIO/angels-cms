@@ -6,13 +6,32 @@ import Routes from './components/angels/Routes';
 import AngelInvite from './components/angels/AdminPanel/AngelInvite';
 import StartupRoutes from './components/startups/Routes';
 import { ConfirmProvider } from 'material-ui-confirm';
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
 
 function App() {
   const { loading } = useAuth0();
-  //test
+  const classes = useStyles();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={classes.root}>
+        <CircularProgress />
+      </div>
+    );
   }
 
   return (

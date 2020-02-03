@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import EmptyState from '../EmptyStates/EmptyState';
 import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
   heroContent: {
@@ -46,7 +47,7 @@ export default function Dashboard({ userRoles }) {
   }, [userRoles, getTokenSilently]);
 
   if (loading || !user) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   }
 
   const search = e => {

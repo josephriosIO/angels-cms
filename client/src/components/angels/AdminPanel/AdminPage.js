@@ -10,8 +10,15 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
 import { useAuth0 } from '../../../react-auth0-spa';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
+  loader: {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
   header: {
     borderBottom: '1px solid #e7e9eb',
     padding: '30px 0',
@@ -139,7 +146,12 @@ const AdminPage = props => {
     fetchData();
   }, [getTokenSilently]);
 
-  if (users === undefined || invite === undefined) return null;
+  if (users === undefined || invite === undefined)
+    return (
+      <div className={classes.loader}>
+        <CircularProgress />
+      </div>
+    );
 
   const handleChangePage = (e, newPage) => {
     setPage(newPage);

@@ -71,7 +71,7 @@ const StartupDataTable = props => {
 
   const isDisabled = id => {
     if (props.isAdded) {
-      const ids = props.isAdded.map(startups => startups.id);
+      const ids = props.isAdded.map(startups => startups.authId);
 
       if (ids.includes(id)) {
         return true;
@@ -129,7 +129,7 @@ const StartupDataTable = props => {
                   {props.callback ? (
                     <button
                       className={classes.addBtn}
-                      disabled={isDisabled(row.id)}
+                      disabled={isDisabled(row.authId)}
                       onClick={() => props.callback(row)}
                     >
                       add

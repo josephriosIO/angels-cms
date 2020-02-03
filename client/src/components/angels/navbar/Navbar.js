@@ -174,8 +174,8 @@ const Navbar = () => {
     fetchData();
   }, [getTokenSilently]);
 
-  if (loading || !user) {
-    return <div>Loading...</div>;
+  if (loading || !user || roles.length < 1) {
+    return null;
   }
 
   const handleClose = () => {

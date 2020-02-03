@@ -232,8 +232,8 @@ const AdminMeetingPanel = props => {
                 data: [
                   ...startups.map(startup => {
                     const data = [points].map((startupPoints, idx) => {
-                      return startupPoints[startup.id]
-                        ? startupPoints[startup.id]
+                      return startupPoints[startup.authId]
+                        ? startupPoints[startup.authId]
                         : 0;
                     });
                     return data;

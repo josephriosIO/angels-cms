@@ -233,9 +233,9 @@ export default function SeeStartups({ userRoles }) {
                       <p className='empty-title h5'>No Upcoming meetings.</p>
                     </div>
                   ) : (
-                    users.map(startupsData => (
+                    users.map((startupsData, idx) => (
                       <MeetingPanels
-                        key={startupsData.id}
+                        key={idx}
                         users={startupsData}
                         roles={userRoles}
                       />
@@ -253,10 +253,10 @@ export default function SeeStartups({ userRoles }) {
                       <p className='empty-title h5'>No previous meetings.</p>
                     </div>
                   ) : (
-                    oldMeetings.map(startupsData => (
+                    oldMeetings.map((startupsData, idx) => (
                       <MeetingPanels
                         roles={userRoles}
-                        key={startupsData.id}
+                        key={idx}
                         users={startupsData}
                       />
                     ))

@@ -44,9 +44,13 @@ const useStyles = makeStyles(theme => ({
   },
   startupLevel: {
     marginRight: '5px',
+    textDecoration: 'underline',
     color: '#000',
     '&:visited': {
       color: '#000',
+    },
+    '&:hover': {
+      color: 'blue',
     },
   },
   topContent: {
@@ -189,7 +193,7 @@ const MeetingPanel = ({ users, roles }) => {
                         href={startup.website}
                         className={classes.startupLevel}
                       >
-                        {startup.companyName},
+                        {startup.companyName}
                       </a>
                     </div>
                   ))}

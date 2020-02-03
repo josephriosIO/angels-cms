@@ -352,7 +352,7 @@ router.get('/totalpoints/meeting/:id', checkJwt, async (req, res) => {
       const copy = { ...aggr };
       const v = curr.votes;
 
-      const gVote = v[0].groupVote.startup.id;
+      const gVote = v[0].groupVote.startup.authId;
 
       if (copy[gVote]) {
         copy[gVote] += 1;

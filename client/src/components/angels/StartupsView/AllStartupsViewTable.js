@@ -116,13 +116,15 @@ const AllStartupsViewTable = ({ user, vett, archived, removeStartupById }) => {
 
   const removeStartup = async () => {
     try {
+      setOpen(false);
       await confirm({
         description: `This will permanently delete ${user.companyName} as a startup.`,
       });
       const deleted = true;
       removeStartupById(user, deleted);
     } catch (err) {
-      console.log(err);
+      setOpen(false);
+      console.error(err);
     }
   };
 
@@ -149,7 +151,7 @@ const AllStartupsViewTable = ({ user, vett, archived, removeStartupById }) => {
         open={open}
       >
         <DialogContent dividers>
-          <td className={classes.flex}>
+          <div className={classes.flex}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -180,10 +182,10 @@ const AllStartupsViewTable = ({ user, vett, archived, removeStartupById }) => {
               }
               label='Archived'
             />
-          </td>
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={removeStartup} color='red'>
+          <Button autoFocus onClick={removeStartup} color='secondary'>
             Delete Startup
           </Button>
         </DialogActions>
