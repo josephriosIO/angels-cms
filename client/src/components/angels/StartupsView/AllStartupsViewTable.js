@@ -10,6 +10,7 @@ import { useAuth0 } from '../../../react-auth0-spa';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import axios from 'axios';
+import { useConfirm } from 'material-ui-confirm';
 
 const DialogContent = withStyles(theme => ({
   root: {
@@ -72,6 +73,7 @@ const AllStartupsViewTable = ({ user, vett, archived, removeStartupById }) => {
   const { archieved, vetted } = state;
   const [userData, setUserData] = useState({});
   const { getTokenSilently } = useAuth0();
+  const confirm = useConfirm();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,9 +114,16 @@ const AllStartupsViewTable = ({ user, vett, archived, removeStartupById }) => {
     setOpen(false);
   };
 
-  const removeStartup = () => {
-    const deleted = true;
-    removeStartupById(user, deleted);
+  const removeStartup = async () => {
+    try {
+      await confirm({
+        description: `This will permanently delete ${user.companyName} as a startup.`,
+      });
+      const deleted = true;
+      removeStartupById(user, deleted);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -172,13 +181,10 @@ const AllStartupsViewTable = ({ user, vett, archived, removeStartupById }) => {
               label='Archived'
             />
           </td>
-          <div>
-            <button onClick={removeStartup}> Delete</button>
-          </div>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color='primary'>
-            Save changes
+          <Button autoFocus onClick={removeStartup} color='red'>
+            Delete Startup
           </Button>
         </DialogActions>
       </Dialog>

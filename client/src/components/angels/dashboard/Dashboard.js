@@ -65,8 +65,6 @@ export default function Dashboard({ userRoles }) {
     setFilter(filteredUsers);
   };
 
-  console.log(userRoles);
-
   if (userRoles.length < 1 || users === undefined) return null;
 
   if (!userRoles.ADMIN && !userRoles.ANGEL) {
