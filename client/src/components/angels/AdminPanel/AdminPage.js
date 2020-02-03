@@ -233,7 +233,7 @@ const AdminPage = props => {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map(user => (
                       <DisplayUsers
-                        key={user.id}
+                        key={user.authId}
                         callErrors={callErrors}
                         user={user}
                       />
@@ -242,7 +242,7 @@ const AdminPage = props => {
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map(user => (
                       <DisplayUsers
-                        key={user.id}
+                        key={user.authId}
                         callErrors={callErrors}
                         user={user}
                       />

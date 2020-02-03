@@ -102,7 +102,6 @@ const LandingPage = () => {
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:800px)');
   const [roles, setRoles] = useState(undefined);
-  const [getRolesOnce, setGetRolesOnce] = useState(0);
 
   const { isAuthenticated, loginWithRedirect, getTokenSilently } = useAuth0();
 
@@ -125,6 +124,7 @@ const LandingPage = () => {
       }
     };
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   if (isAuthenticated && roles === undefined) return null;

@@ -163,7 +163,7 @@ const VotingSystem = ({ users }) => {
     return (
       <div className='empty' style={{ marginBottom: '10px' }}>
         <div className='empty-icon'>
-          <i class='fas fa-vote-yea'></i>
+          <i className='fas fa-vote-yea'></i>
         </div>
         <p className='empty-title h5'>Thanks for voting!</p>
       </div>

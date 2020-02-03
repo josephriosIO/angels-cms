@@ -308,7 +308,7 @@ const MeetingCreator = props => {
             <>
               <h2>Selected Startups</h2>
               {createdMeeting.map(startup => (
-                <div key={startup.id} className={classes.onlyFlex}>
+                <div key={startup.authId} className={classes.onlyFlex}>
                   <Chip
                     label={startup.companyName}
                     onClick={() => removeStartupFromMeeting(startup)}

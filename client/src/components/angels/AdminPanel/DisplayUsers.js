@@ -92,12 +92,13 @@ const DisplayUsers = props => {
     <Grid container>
       <Grid item xs={12}>
         <div className={classes.infoHolder}>
-          <Typography>
-            <div className={classes.avatarContainer}>
-              <Avatar src={user.profileImg} alt={user.name} />
-              <p className={classes.usernameStyle}>{user.name}</p>
-            </div>
-          </Typography>
+          <div className={classes.avatarContainer}>
+            <Avatar src={user.profileImg} alt={user.name} />
+            <Typography className={classes.usernameStyle}>
+              {' '}
+              {user.name}{' '}
+            </Typography>
+          </div>
 
           <div className={classes.userInfo}>
             <label>Email:</label>
