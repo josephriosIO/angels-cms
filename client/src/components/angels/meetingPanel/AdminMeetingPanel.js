@@ -14,7 +14,12 @@ import axios from 'axios';
 import { useAuth0 } from '../../../react-auth0-spa';
 
 const columns = [
-  { id: 'authId', align: 'left', label: "Angel's Name", minWidth: 170 },
+  {
+    id: 'authId',
+    align: 'left',
+    label: "Community Member's Name",
+    minWidth: 170,
+  },
   { id: 'groupVote', align: 'left', label: 'Group Vote', minWidth: 100 },
   { id: 'userVote', align: 'left', label: 'Personal Vote', minWidth: 100 },
 ];
