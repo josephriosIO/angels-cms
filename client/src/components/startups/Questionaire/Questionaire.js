@@ -134,7 +134,7 @@ const Questionaire = () => {
       handleClick();
       setSubmitted(true);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setErrorMsg('error.');
       setErrorStatus('danger');
       handleClick();

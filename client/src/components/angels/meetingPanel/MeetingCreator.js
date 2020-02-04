@@ -126,7 +126,7 @@ const MeetingCreator = props => {
           setUsers(result.data);
         }
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setUsers([]);
       }
     };

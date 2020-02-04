@@ -176,7 +176,7 @@ const Navbar = () => {
 
         setRoles(userRoles.data);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     fetchData();

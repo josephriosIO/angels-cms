@@ -32,7 +32,6 @@ const useStyles = makeStyles(theme => ({
 
 const DashboardAngels = ({ angels }) => {
   const classes = useStyles();
-  console.log(angels);
 
   if (angels === undefined) return null;
 

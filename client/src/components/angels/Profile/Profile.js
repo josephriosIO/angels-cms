@@ -38,7 +38,7 @@ const Profile = () => {
           phoneNumber: user.data.phoneNumber,
         });
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
     fetchData();
@@ -76,7 +76,7 @@ const Profile = () => {
       setErrorStatus('success');
       handleClick();
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setErrorMsg('Error Updating Profile.');
       setErrorStatus('danger');
       handleClick();

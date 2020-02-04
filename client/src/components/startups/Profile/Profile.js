@@ -175,7 +175,7 @@ const Profile = () => {
       setErrorStatus('success');
       handleClick();
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setErrorMsg('error.');
       setErrorStatus('danger');
       handleClick();

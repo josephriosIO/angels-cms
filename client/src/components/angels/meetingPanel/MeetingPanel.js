@@ -143,7 +143,7 @@ const MeetingPanel = ({ users, roles }) => {
 
         setVote(result.data);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setIsVoting(false);
       }
     };
