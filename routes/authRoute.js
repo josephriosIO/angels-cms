@@ -8,6 +8,9 @@ require('dotenv').config();
 
 const router = express.Router();
 
+/**
+ * Create a startup based user when startups sign up
+ */
 router.get('/createOrGetStartup', checkJwt, async (req, res) => {
   try {
     const userInfo = await axios('https://dev-5f25to47.auth0.com/userInfo', {
@@ -51,6 +54,9 @@ router.get('/createOrGetStartup', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Create a user when a non startup signs up
+ */
 router.get('/createOrGetUser', checkJwt, async (req, res) => {
   try {
     const userInfo = await axios('https://dev-5f25to47.auth0.com/userInfo', {
@@ -100,6 +106,9 @@ router.get('/createOrGetUser', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Get all roles for the user that is logged in
+ */
 router.get('/getroles', checkJwt, async (req, res) => {
   try {
     let allRoles = await Roles.findOne({ authId: req.user.sub });

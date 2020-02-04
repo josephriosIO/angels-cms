@@ -22,6 +22,7 @@ exports.checkJwt = jwt({
   algorithm: ['RS256'],
 });
 
+// add role to user
 exports.addRoleToUser = async (id, role) => {
   //update roles object
   try {
@@ -39,6 +40,7 @@ exports.addRoleToUser = async (id, role) => {
   }
 };
 
+// remove role from user
 exports.removeRoleToUser = async (id, role) => {
   //update roles object
   try {
@@ -56,6 +58,7 @@ exports.removeRoleToUser = async (id, role) => {
   }
 };
 
+// get votes based on the meeting
 exports.getVotesByMeeting = async id => {
   let vote = await Votes.find({});
   const userRoles = [];

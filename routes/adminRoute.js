@@ -30,6 +30,9 @@ async function checkIfUserHasRole(userId, role) {
   return true;
 }
 
+/**
+ * Add angel role to user based on the users ID
+ */
 router.get('/add/angelrole/user/:id', checkJwt, async (req, res) => {
   try {
     if (await checkIfUserHasRole(req.params.id, [userRoles.ANGEL])) {
@@ -45,6 +48,9 @@ router.get('/add/angelrole/user/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Add Admin role to user based on the users ID
+ */
 router.get('/add/adminrole/user/:id', checkJwt, async (req, res) => {
   try {
     if (await checkIfUserHasRole(req.params.id, [userRoles.ADMIN])) {
@@ -60,6 +66,9 @@ router.get('/add/adminrole/user/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Grab all startups that haven't been archived by the admin
+ */
 router.get('/allstartups', checkJwt, async (req, res) => {
   try {
     const users = await Roles.find({});
@@ -99,6 +108,9 @@ router.get('/allstartups', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Archive a startup based on their ID
+ */
 router.get('/archivestartup/:id', checkJwt, async (req, res) => {
   //build profile object
   try {
@@ -125,8 +137,10 @@ router.get('/archivestartup/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Vet a startup for meetings based on the ID
+ */
 router.get('/vettstartup/:id', checkJwt, async (req, res) => {
-  //build profile object
   try {
     let profile = await StartupsProfile.findOne({ authId: req.params.id });
     let profileFields = Boolean;
@@ -150,6 +164,9 @@ router.get('/vettstartup/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Delete the startup based on the startups ID
+ */
 router.delete('/deletestartup/:id', checkJwt, async (req, res) => {
   //build profile object
   try {
@@ -164,6 +181,9 @@ router.delete('/deletestartup/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Grab all archived startups
+ */
 router.get('/archivedstartups', checkJwt, async (req, res) => {
   try {
     const users = await Roles.find({});
@@ -203,6 +223,9 @@ router.get('/archivedstartups', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Grab all vetted startups.
+ */
 router.get('/vettedstartups', checkJwt, async (req, res) => {
   try {
     const users = await Roles.find({});
@@ -244,6 +267,9 @@ router.get('/vettedstartups', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Grab all users that aren't a startup that includes ADMIN, community members and non members
+ */
 router.get('/users', checkJwt, async (req, res) => {
   try {
     const users = await Roles.find({});
@@ -281,6 +307,9 @@ router.get('/users', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Get roles for the user based on the ID that's given
+ */
 router.get('/getroles/:id', checkJwt, async (req, res) => {
   try {
     const { id } = req.params;
@@ -295,6 +324,9 @@ router.get('/getroles/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Create an invite for users to instantly become an community member
+ */
 router.get('/createinvite', checkJwt, async (req, res) => {
   try {
     const inviteCode = uuidv4();
@@ -318,6 +350,9 @@ router.get('/createinvite', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Create a meeting with startups that will be included with that meeting with a date and title.
+ */
 router.post('/createmeeting', checkJwt, async (req, res) => {
   try {
     const meetingId = uuidv4();
@@ -344,6 +379,9 @@ router.post('/createmeeting', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * get total points based on users group vote and add them all up
+ */
 router.get('/totalpoints/meeting/:id', checkJwt, async (req, res) => {
   try {
     const votes = await getVotesByMeeting(req.params.id);
@@ -369,6 +407,9 @@ router.get('/totalpoints/meeting/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * get all users votes that voted for that meeting
+ */
 router.get('/votes/meeting/:id', checkJwt, async (req, res) => {
   try {
     const { id } = req.params;
@@ -387,6 +428,9 @@ router.get('/votes/meeting/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * If meeting isn't already up for user vote allow admin to update meeting even deleting it
+ */
 router.put('/updatemeeting/:id', checkJwt, async (req, res) => {
   try {
     const { title, startups, date } = req.body.data;
@@ -414,8 +458,10 @@ router.put('/updatemeeting/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Delete meeting
+ */
 router.delete('/deletemeeting/:id', checkJwt, async (req, res) => {
-  //build profile object
   try {
     //delete
     await Meetings.findOneAndDelete({

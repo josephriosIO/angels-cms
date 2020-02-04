@@ -6,6 +6,9 @@ const middleware = require('../middleware/middleware');
 const checkJwt = middleware.checkJwt;
 const router = express.Router();
 
+/**
+ * Get profile data for the user that is logged in
+ */
 router.get('/me', checkJwt, async (req, res) => {
   try {
     let profile = await AngelsProfile.findOne({ authId: req.user.sub });
@@ -25,6 +28,9 @@ router.get('/me', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Get startups profile data based on the startups ID
+ */
 router.get('/getStartups/profile/:id', checkJwt, async (req, res) => {
   try {
     let profile = await StartupsProfile.findOne({ authId: req.params.id });
@@ -36,6 +42,9 @@ router.get('/getStartups/profile/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Get profile data for the startup thats logged in
+ */
 router.get('/startups/me', checkJwt, async (req, res) => {
   try {
     let profile = await StartupsProfile.findOne({ authId: req.user.sub });
@@ -55,6 +64,9 @@ router.get('/startups/me', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Update startup profile data for user thats logged in
+ */
 router.post('/startups/update', checkJwt, async (req, res) => {
   const {
     companyName,
@@ -95,6 +107,9 @@ router.post('/startups/update', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Update user profile data for user thats logged in
+ */
 router.post('/', checkJwt, async (req, res) => {
   const { name, location, phoneNumber, bio } = req.body.form;
   //build profile object

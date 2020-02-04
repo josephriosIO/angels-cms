@@ -18,6 +18,9 @@ const UserRoles = {
   STARTUP: 'STARTUP',
 };
 
+/**
+ *  Get community members profile based on the id given
+ */
 router.get('/getAngel/profile/:id', checkJwt, async (req, res) => {
   try {
     console.log(req.params.id);
@@ -31,6 +34,9 @@ router.get('/getAngel/profile/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Get community member based on the id given
+ */
 router.get('/getAngel/:id', checkJwt, async (req, res) => {
   try {
     let profile = await User.findOne({ authId: req.params.id });
@@ -44,6 +50,9 @@ router.get('/getAngel/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * get all community members available
+ */
 router.get('/getAngels', checkJwt, async (req, res) => {
   try {
     const users = await Roles.find({});
@@ -81,6 +90,9 @@ router.get('/getAngels', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Consume invite as a user if code is valid add community member role to user
+ */
 router.post('/consumeInvite', checkJwt, async (req, res) => {
   try {
     const { invite } = req.body;
@@ -114,6 +126,9 @@ router.post('/consumeInvite', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Can the user vote on the meeting in question
+ */
 router.post('/canvote', checkJwt, async (req, res) => {
   try {
     const meetingDate = new Date(req.body.date);
@@ -128,6 +143,9 @@ router.post('/canvote', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Get all meetings created new and old.
+ */
 router.get('/getmeetings', checkJwt, async (req, res) => {
   try {
     const users = await Meetings.find({});
@@ -144,6 +162,9 @@ router.get('/getmeetings', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Get certain meeting based on that meeting id
+ */
 router.get('/getmeeting/:id', checkJwt, async (req, res) => {
   try {
     let meeting = await Meetings.findOne({ meetingId: req.params.id });
@@ -155,6 +176,9 @@ router.get('/getmeeting/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Check if user has voted on the meeting in question
+ */
 router.get('/hasvoted/:id', checkJwt, async (req, res) => {
   try {
     let voted = await Votes.findOne({
@@ -169,6 +193,9 @@ router.get('/hasvoted/:id', checkJwt, async (req, res) => {
   }
 });
 
+/**
+ * Vote on meeting for the user logged in
+ */
 router.post('/voteonmeeting/:id', checkJwt, async (req, res) => {
   try {
     let vote = await Votes.findOne({
