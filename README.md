@@ -14,9 +14,15 @@ MONGO_SETUP= // Mongo login setup using Mongo Altas;
 
 ### Usage
 
+Users can login to as a community member to be to be vetted by an admin to see current/previous/future meetings any current meeting the user will be allowed to vote on with two votes. One vote is for a personally where you are going to invest in and one group vote where the majojity is chosen and the admin can view these votes where they can decide where the community as a whole will invest.
+
+Startups will have their own login flow where they will login with either google/linkedin or make an account and fill out a short questionaire about their company.
+
 As admin the following routes will be available to access `/admin /startups` etc. and all create routes for meetings.
 
 Admins will also have access to see every user type that signs up including startups and users that apply for a community member role.
+
+Admins can also choose which startups will be involved with each meeting where other community members will vote on.
 
 ### Backend API calls
 
