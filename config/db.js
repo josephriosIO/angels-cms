@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const db =
-  'mongodb+srv://joseph:1234qwer@cluster0-ie2d2.mongodb.net/test?retryWrites=true&w=majority';
+const db = process.env.MONGO_SETUP;
 
 const connectDB = async () => {
   try {
