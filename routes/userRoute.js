@@ -23,13 +23,11 @@ const UserRoles = {
  */
 router.get('/getAngel/profile/:id', checkJwt, async (req, res) => {
   try {
-    console.log(req.params.id);
     let profile = await AngelsProfile.findOne({ authId: req.params.id });
-    console.log(profile);
 
     return res.json(profile);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -41,11 +39,9 @@ router.get('/getAngel/:id', checkJwt, async (req, res) => {
   try {
     let profile = await User.findOne({ authId: req.params.id });
 
-    console.log(profile);
-
     return res.json(profile);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -85,7 +81,7 @@ router.get('/getAngels', checkJwt, async (req, res) => {
 
     return res.status(200).json(userArr);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -121,7 +117,7 @@ router.post('/consumeInvite', checkJwt, async (req, res) => {
 
     return res.status(200).json(code);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -138,7 +134,7 @@ router.post('/canvote', checkJwt, async (req, res) => {
 
     return res.status(200).json(bool);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -157,7 +153,7 @@ router.get('/getmeetings', checkJwt, async (req, res) => {
 
     return res.status(200).json(meetingsInfo);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json(err);
   }
 });
@@ -171,7 +167,7 @@ router.get('/getmeeting/:id', checkJwt, async (req, res) => {
 
     return res.json(meeting);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json(err);
   }
 });
@@ -188,7 +184,7 @@ router.get('/hasvoted/:id', checkJwt, async (req, res) => {
 
     return res.status(200).json(voted);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: err });
   }
 });
@@ -216,7 +212,7 @@ router.post('/voteonmeeting/:id', checkJwt, async (req, res) => {
     await vote.save();
     return res.status(200).json(vote);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: err });
   }
 });

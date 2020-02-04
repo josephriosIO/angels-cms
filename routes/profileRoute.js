@@ -37,7 +37,7 @@ router.get('/getStartups/profile/:id', checkJwt, async (req, res) => {
 
     return res.json(profile);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });

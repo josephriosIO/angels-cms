@@ -43,7 +43,7 @@ router.get('/add/angelrole/user/:id', checkJwt, async (req, res) => {
     await addRoleToUser(req.params.id, userRoles.ANGEL);
     return res.status(200).json({ msg: 'Role added.' });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -61,7 +61,7 @@ router.get('/add/adminrole/user/:id', checkJwt, async (req, res) => {
     await addRoleToUser(req.params.id, userRoles.ADMIN);
     return res.status(200).json({ msg: 'Role added.' });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -103,7 +103,7 @@ router.get('/allstartups', checkJwt, async (req, res) => {
 
     return res.status(200).json(filtered);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -132,7 +132,7 @@ router.get('/archivestartup/:id', checkJwt, async (req, res) => {
     );
     return res.json(profile);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -159,7 +159,7 @@ router.get('/vettstartup/:id', checkJwt, async (req, res) => {
     );
     return res.json(profile);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -176,7 +176,7 @@ router.delete('/deletestartup/:id', checkJwt, async (req, res) => {
     });
     return res.json('Deleted');
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -218,7 +218,7 @@ router.get('/archivedstartups', checkJwt, async (req, res) => {
 
     return res.status(200).json(filtered);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -262,7 +262,7 @@ router.get('/vettedstartups', checkJwt, async (req, res) => {
 
     return res.status(200).json(filtered);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -345,7 +345,7 @@ router.get('/createinvite', checkJwt, async (req, res) => {
     await code.save();
     return res.status(200).json(code);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -374,7 +374,7 @@ router.post('/createmeeting', checkJwt, async (req, res) => {
     await createdMeeting.save();
     return res.status(200).json(createdMeeting);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -402,7 +402,7 @@ router.get('/totalpoints/meeting/:id', checkJwt, async (req, res) => {
 
     return res.status(200).json(voteTotals);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -423,7 +423,7 @@ router.get('/votes/meeting/:id', checkJwt, async (req, res) => {
 
     return res.status(200).json(userRoles);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -453,7 +453,7 @@ router.put('/updatemeeting/:id', checkJwt, async (req, res) => {
     );
     return res.json(createdMeeting);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
@@ -469,7 +469,7 @@ router.delete('/deletemeeting/:id', checkJwt, async (req, res) => {
     });
     return res.json('Deleted');
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ msg: 'Server Error.' });
   }
 });
