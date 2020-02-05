@@ -46,12 +46,16 @@ const DashboardTable = ({ angel, angelInfo }) => {
       <TableCell align={'left'}>
         <div className={classes.cellTable}>
           {' '}
+          <a href={`tel: ${angelInfo?.phoneNumber}`}>
           {angelInfo?.phoneNumber ? angelInfo.phoneNumber : 'N/A'}
+          </a>
         </div>
       </TableCell>
       <TableCell align={'left'}>
         <div className={classes.cellTable}>
+          <a href={`mailto: ${angel.email}`}>
           {angel?.email ? angel.email : 'N/A'}
+          </a>
         </div>
       </TableCell>
       <TableCell align={'left'}>

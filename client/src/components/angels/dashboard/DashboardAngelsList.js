@@ -68,7 +68,7 @@ const DashboardAngelsList = ({ angels }) => {
     <Grid>
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
-          <Table stickyHeader aria-label='Angels List'>
+          <Table aria-label='Angels List'>
             <TableHead>
               <TableRow>
                 <TableCell align={'left'}>Name</TableCell>
