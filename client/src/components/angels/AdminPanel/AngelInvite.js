@@ -112,7 +112,7 @@ const AngelInvite = props => {
             <p className='empty-subtitle'>
               Please login to get your memebership invitation accepted.
             </p>
-            <button onClick={() => loginWithPopup({})}>Login</button>
+            <button onClick={() => loginWithPopup({redirect_uri: `${window.location.origin.toString()}`})}>Login</button>
           </div>
         </div>
       </>
