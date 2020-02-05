@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from 'axios';
 import { useAuth0 } from '../../../react-auth0-spa';
+import { useConfirm } from 'material-ui-confirm';
 
 const useStyles = makeStyles(theme => ({
   infoHolder: {
@@ -38,12 +39,13 @@ const useStyles = makeStyles(theme => ({
 
 const DisplayUsers = props => {
   const classes = useStyles();
-  const { user, callErrors } = props;
+  const { user, callErrors, removeUserById } = props;
   const [state, setState] = useState({
     admin: false,
     angel: false,
   });
   const { getTokenSilently } = useAuth0();
+  const confirm = useConfirm();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,6 +89,19 @@ const DisplayUsers = props => {
 
     callErrors(!angel);
   };
+  
+  const removeUser = async () => {
+    try {
+      await confirm({
+        description: `This will permanently delete ${user.name} as a User.`,
+      });
+      const deleted = true;
+      removeUserById(user, deleted);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 
   return (
     <Grid container>
@@ -136,6 +151,11 @@ const DisplayUsers = props => {
               }
               label='Community Member'
             />
+          </div>
+          <div>
+            <button onClick={removeUser}>
+              Delete User
+            </button>
           </div>
         </div>
       </Grid>

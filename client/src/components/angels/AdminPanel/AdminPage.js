@@ -185,6 +185,26 @@ const AdminPage = props => {
       handleClick();
     }
   };
+  
+  const removeUserById = async (user, removed) => {
+    const token = await getTokenSilently();
+    await axios.delete(`/api/admin/deleteuser/${user.authId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (removed) {
+      const index = users.indexOf(user);
+      if (index > -1) {
+        users.splice(index, 1);
+      }
+      setUsers([...users]);
+      setErrorMsg('User Deleted from list.');
+      setErrorStatus('success');
+      handleClick();
+    }
+  };
+
 
   return (
     <>
@@ -236,6 +256,7 @@ const AdminPage = props => {
                         key={user.authId}
                         callErrors={callErrors}
                         user={user}
+                        removeUserById={removeUserById}
                       />
                     ))
                 : users
@@ -245,6 +266,7 @@ const AdminPage = props => {
                         key={user.authId}
                         callErrors={callErrors}
                         user={user}
+                        removeUserById={removeUserById}
                       />
                     ))}
             </div>

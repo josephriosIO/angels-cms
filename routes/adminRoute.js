@@ -4,6 +4,7 @@ const { Roles } = require('../models/Roles');
 const { Votes } = require('../models/Votes');
 const Invite = require('../models/Invite');
 const middleware = require('../middleware/middleware');
+const AngelsProfile = require('../models/AngelsProfile');
 const StartupsProfile = require('../models/StartupsProfile');
 const Meetings = require('../models/Meetings');
 const uuidv4 = require('uuid/v4');
@@ -174,6 +175,34 @@ router.delete('/deletestartup/:id', checkJwt, async (req, res) => {
     await StartupsProfile.findOneAndDelete({
       authId: req.params.id,
     });
+    await User.findOneAndDelete({
+      authId: req.params.id,
+    });
+    await Roles.findOneAndDelete({
+      authId: req.params.id,
+    });
+    return res.json('Deleted');
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: 'Server Error.' });
+  }
+});
+
+/**
+ * Delete the startup based on the startups ID
+ */
+router.delete('/deleteuser/:id', checkJwt, async (req, res) => {
+  try {
+    //delete
+    await User.findOneAndDelete({
+      authId: req.params.id,
+    });
+    await AngelsProfile.findOneAndDelete({
+      authId: req.params.id,
+    });
+    await Roles.findOneAndDelete({
+      authId: req.params.id,
+    });
     return res.json('Deleted');
   } catch (err) {
     console.error(err);
@@ -284,12 +313,16 @@ router.get('/users', checkJwt, async (req, res) => {
     const userIds = userRoles.map(({ authId }) => {
       return authId;
     });
+    
+    console.log(userIds);
 
     if (userIds.length < 1) {
       return res.status(200).json([]);
     }
 
     const usersQuery = await User.find({});
+    
+    console.log(usersQuery);
 
     const userArr = [];
     usersQuery.forEach(user => {
