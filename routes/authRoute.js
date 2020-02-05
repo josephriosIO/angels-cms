@@ -80,7 +80,7 @@ router.get('/createOrGetUser', checkJwt, async (req, res) => {
         authId: sub,
         roles: {
           ADMIN: true,
-          ANGEL: false,
+          ANGEL: true,
           STARTUP: false,
         },
       });

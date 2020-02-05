@@ -314,7 +314,6 @@ router.get('/users', checkJwt, async (req, res) => {
       return authId;
     });
     
-    console.log(userIds);
 
     if (userIds.length < 1) {
       return res.status(200).json([]);
@@ -322,14 +321,15 @@ router.get('/users', checkJwt, async (req, res) => {
 
     const usersQuery = await User.find({});
     
-    console.log(usersQuery);
 
     const userArr = [];
     usersQuery.forEach(user => {
       userIds.map(id => {
-        if (user.authId === id) {
-          userArr.push(user);
-        }
+        if (req.user.sub !== id) {
+          if (user.authId === id) {
+            userArr.push(user);
+          }
+        } 
       });
     });
 
