@@ -30,7 +30,7 @@ const EmptyState = props => {
         <Link
           className={classes.link}
           to={{
-            pathname: `/angels/admin`,
+            pathname: `/community/admin`,
           }}
         >
           Admin

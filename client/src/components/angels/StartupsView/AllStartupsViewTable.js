@@ -10,6 +10,7 @@ import { useAuth0 } from '../../../react-auth0-spa';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useConfirm } from 'material-ui-confirm';
 
 const DialogContent = withStyles(theme => ({
@@ -184,6 +185,18 @@ const AllStartupsViewTable = ({ user, vett, archived, removeStartupById }) => {
             />
           </div>
         </DialogContent>
+				<DialogActions style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+				<Button autoFocus color='primary'>
+					<Link
+					   to={{
+							pathname: `/community/edit/startup/${user.authId}`,
+							startups: { id: user.authId },
+						}}
+					>
+            Edit Startup
+					</Link>
+					</Button>
+        </DialogActions>
         <DialogActions>
           <Button autoFocus onClick={removeStartup} color='secondary'>
             Delete Startup

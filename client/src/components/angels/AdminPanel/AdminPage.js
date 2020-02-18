@@ -9,6 +9,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useAuth0 } from '../../../react-auth0-spa';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -33,7 +34,10 @@ const useStyles = makeStyles(theme => ({
   tableWrapper: {
     overflowX: 'auto',
     height: '80%',
-  },
+	},
+	createAStartup: {
+		color: '#000 !important'
+	},
   headerInvite: {
     display: 'flex',
     alignItems: 'center',
@@ -185,7 +189,7 @@ const AdminPage = props => {
       handleClick();
     }
   };
-  
+
   const removeUserById = async (user, removed) => {
     const token = await getTokenSilently();
     await axios.delete(`/api/admin/deleteuser/${user.authId}`, {
@@ -240,6 +244,11 @@ const AdminPage = props => {
               </Button>
             </div>
           </div>
+					<div className={classes.headerInvite}>
+						<Link className={classes.createAStartup} to={`/community/admin/create-startup`}>
+							<span>Create Startup</span>
+						</Link>
+					</div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <SearchBar search={search} title={'Name'} />

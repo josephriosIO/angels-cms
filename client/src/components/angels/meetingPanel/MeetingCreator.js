@@ -201,7 +201,7 @@ const MeetingCreator = props => {
         </div>
         <p className='empty-title h5'>No Startups that has been vetted :(</p>
         <p className='empty-subtitle'>
-          Go vet some startups <Link to='/angels/startups'>here</Link>
+          Go vet some startups <Link to='/community/startups'>here</Link>
         </p>
       </div>
     );

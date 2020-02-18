@@ -6,9 +6,11 @@ import Profile from './Profile/Profile';
 import AdminPage from './AdminPanel/AdminPage';
 import { Switch } from 'react-router-dom';
 import AllStartupsView from './StartupsView/AllStartupsView';
+import CreateStartup from './AdminPanel/CreateStartup';
 import SeeMeetings from './meetingPanel/SeeMeetings';
 import MeetingCreator from './meetingPanel/MeetingCreator';
 import EditMeeting from './meetingPanel/EditMeeting';
+import EditStartupsProfile from './AdminPanel/EditStartupsProfile';
 import AdminMeetingPanel from './meetingPanel/AdminMeetingPanel';
 
 const Routes = props => {
@@ -26,6 +28,16 @@ const Routes = props => {
           exact
           path={`${props.match.path}/admin`}
           component={AdminPage}
+        />
+				<Protected
+          exact
+          path={`${props.match.path}/edit/startup/:id`}
+          component={EditStartupsProfile}
+        />
+				<Protected
+          exact
+          path={`${props.match.path}/admin/create-startup`}
+          component={CreateStartup}
         />
         <Protected
           exact

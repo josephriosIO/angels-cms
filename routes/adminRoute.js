@@ -32,6 +32,113 @@ async function checkIfUserHasRole(userId, role) {
 }
 
 /**
+ * Admin edit startup profiles
+ */
+router.post('/update-startup/profile/:id', checkJwt, async (req, res) => {
+	try {
+		const {companyName, location, website, companySize, missionStatement, phoneNumber } = req.body.form;
+				//build profile object
+				let profileFields = {};
+				profileFields.user = req.params.id;
+
+				profileFields = {};
+				if (companyName) profileFields.companyName = companyName;
+				if (location) profileFields.location = location;
+				if (website) profileFields.website = website;
+				if (phoneNumber) profileFields.phoneNumber = phoneNumber;
+				if (companySize) profileFields.companySize = companySize;
+				if (missionStatement) profileFields.missionStatement = missionStatement;
+				profileFields.completed = true;
+				let profile = await StartupsProfile.findOne({ authId: req.params.id });
+				if (profile) {
+					//update
+					profile = await StartupsProfile.findOneAndUpdate(
+						{ authId: req.params.id },
+						{ $set: profileFields },
+						{ new: true },
+					);
+				} else {
+					profile = new StartupsProfile(profileFields);
+					await profile.save();
+				}
+				return res.status(200).json(profile);
+
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({msg: 'Server Error.'})
+	}
+})
+
+/**
+ * Create startup
+ */
+router.post('/create-startup', checkJwt, async (req,res) => {
+	try {
+		const sub = uuidv4();
+		const picture = 'none';
+		const { email, companyName, location, website, companySize, missionStatement, phoneNumber } = req.body.form;
+		let user = await User.findOne({ email });
+
+    let allRoles = await Roles.findOne({ authId: sub });
+
+    if (user && allRoles) {
+      return res.status(200).json(user);
+    }
+
+    allRoles = new Roles({
+      authId: sub,
+      roles: {
+        ADMIN: false,
+        ANGEL: false,
+        STARTUP: true,
+      },
+    });
+
+    user = new User({
+      authId: sub,
+      profileImg: picture,
+      email,
+      name: companyName,
+    });
+
+    await allRoles.save();
+		await user.save();
+
+		// create startup profile
+
+		//build profile object
+		let profileFields = {};
+		profileFields.user = sub;
+
+		profileFields = {};
+		if (sub) profileFields.authId = sub;
+		if (companyName) profileFields.companyName = companyName;
+		if (location) profileFields.location = location;
+		if (website) profileFields.website = website;
+		if (phoneNumber) profileFields.phoneNumber = phoneNumber;
+		if (companySize) profileFields.companySize = companySize;
+		if (missionStatement) profileFields.missionStatement = missionStatement;
+		profileFields.completed = true;
+		let profile = await StartupsProfile.findOne({ authId: sub });
+		if (profile) {
+			//update
+			profile = await StartupsProfile.findOneAndUpdate(
+				{ authId: sub },
+				{ $set: profileFields },
+				{ new: true },
+			);
+		} else {
+			profile = new StartupsProfile(profileFields);
+			await profile.save();
+		}
+    return res.status(200).json(user);
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({msg: 'Server Error.'});
+	}
+})
+
+/**
  * Add angel role to user based on the users ID
  */
 router.get('/add/angelrole/user/:id', checkJwt, async (req, res) => {
@@ -313,14 +420,14 @@ router.get('/users', checkJwt, async (req, res) => {
     const userIds = userRoles.map(({ authId }) => {
       return authId;
     });
-    
+
 
     if (userIds.length < 1) {
       return res.status(200).json([]);
     }
 
     const usersQuery = await User.find({});
-    
+
 
     const userArr = [];
     usersQuery.forEach(user => {
@@ -329,7 +436,7 @@ router.get('/users', checkJwt, async (req, res) => {
           if (user.authId === id) {
             userArr.push(user);
           }
-        } 
+        }
       });
     });
 

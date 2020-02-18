@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React,{ useState } from 'react';
 import Error from '../../Errors/Error';
-import { Redirect } from 'react-router-dom';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import { Redirect } from 'react-router-dom';
 import { useAuth0 } from '../../../react-auth0-spa';
 
 const employeesValues = [
@@ -58,17 +58,17 @@ const useStyles = makeStyles(theme => ({
     padding: '28px',
   },
   footer: {
+		textAlign: 'center',
     marginTop: '100px',
   },
 }));
 
-const Questionaire = () => {
-  const classes = useStyles();
+const CreateStartup = () => {
+	const classes = useStyles();
   const [errorMsg, setErrorMsg] = useState('');
-  const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const [reload, setReload] = useState(false);
   const [errorStatus, setErrorStatus] = useState('');
-  const [formProfile, setProfile] = useState(undefined);
-  const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     companyName: '',
     location: '',
@@ -76,35 +76,12 @@ const Questionaire = () => {
     phoneNumber: '',
     companySize: 0,
     funded: false,
-    website: '',
+		website: '',
+		email: '',
   });
-  const { getTokenSilently } = useAuth0();
+	const { getTokenSilently } = useAuth0();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = await getTokenSilently();
-
-      const startup = await axios(`/api/profile/startups/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setProfile(startup.data);
-
-      setForm({
-        companyName: startup.companyName,
-        missionStatement: startup.missionStatement,
-        location: startup.location,
-        phoneNumber: startup.phoneNumber,
-        funded: startup.funded,
-        companySize: startup.companySize,
-      });
-    };
-    fetchData();
-  }, [getTokenSilently]);
-
-  const handleClick = () => {
+	const handleClick = () => {
     setOpen(true);
   };
 
@@ -117,11 +94,22 @@ const Questionaire = () => {
   };
 
   const handleSubmits = async event => {
-    event.preventDefault();
+		event.preventDefault();
+		if (form?.companyName === '' ||
+		form?.location === '' ||
+		form?.phoneNumber === '' ||
+		form?.missionStatement === '' ||
+		form?.website === '' ||
+		form?.email === '') {
+			setErrorMsg('Form not completed.');
+			setErrorStatus('error');
+			handleClick();
+			return;
+		}
     try {
       const token = await getTokenSilently();
       await axios.post(
-        `/api/profile/startups/update`,
+        `/api/admin/create-startup`,
         { form },
         {
           headers: {
@@ -129,10 +117,12 @@ const Questionaire = () => {
           },
         },
       );
-      setErrorMsg('Saved.');
+      setErrorMsg(`Saved. Redirecting to startups in 3 seconds.`);
       setErrorStatus('success');
-      handleClick();
-      setSubmitted(true);
+			handleClick();
+			setTimeout(function() {
+				setReload(true);
+			}, 3000);
     } catch (err) {
       console.error(err);
       setErrorMsg('error.');
@@ -141,46 +131,51 @@ const Questionaire = () => {
     }
   };
 
-  const onChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+	const onChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  if (!formProfile) {
-    console.error('Profile is empty!');
+	if (reload) {
+    return <Redirect to='/community/startups' />;
   }
 
-  if (formProfile === undefined) return null;
-
-  if (formProfile.completed) {
-    if (true) {
-      return <Redirect to={`/startups/dashboard`} />;
-    }
-  }
-
-  return (
+	return (
     <div>
-      {submitted ? <Redirect to={`/startups/dashboard`} /> : null}
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        open={open}
-        autoHideDuration={5000}
-        onClose={handleClose}
-      >
-        <Error onClose={handleClose} variant={errorStatus} message={errorMsg} />
-      </Snackbar>
+     <span>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+        >
+          <Error
+            onClose={handleClose}
+            variant={errorStatus}
+            message={errorMsg}
+          />
+        </Snackbar>
+      </span>
       <div className={classes.header}>
-        <h2 style={{ fontSize: '1rem' }}>Create a Startup Profile</h2>
+        <h2 style={{ fontSize: '1rem' }}>Create a Startup</h2>
       </div>
       <div className={classes.layout}>
         <div className={classes.formContainer}>
-          <form onSubmit={handleSubmits}>
-            <div className={classes.flex}>
+          <form>
+					<div className={classes.flex}>
               <label>Company Name</label>
               <TextField
                 value={form.companyName}
                 onChange={e => onChange(e)}
                 name='companyName'
+              />
+            </div>
+					<div className={classes.flex}>
+              <label>Email</label>
+              <TextField
+                value={form.email}
+                onChange={e => onChange(e)}
+                name='email'
               />
             </div>
             <div className={classes.flex}>
@@ -189,6 +184,15 @@ const Questionaire = () => {
                 value={form.website}
                 onChange={e => onChange(e)}
                 name='website'
+              />
+            </div>
+						<div className={classes.flex}>
+              <label>Phone Number</label>
+              <TextField
+							  type="number"
+                value={form.phoneNumber}
+                onChange={e => onChange(e)}
+                name='phoneNumber'
               />
             </div>
             <div className={classes.flex}>
@@ -227,7 +231,7 @@ const Questionaire = () => {
             </div>
             <div className={classes.btn}>
               <div>
-                <Button variant='contained' color='primary' type='submit'>
+                <Button onClick={(e) => handleSubmits(e)} variant='contained' color='primary'>
                   Submit
                 </Button>
               </div>
@@ -235,10 +239,13 @@ const Questionaire = () => {
           </form>
         </div>
         <footer className={classes.footer}>
-          <p>Powered By Reshuffle</p>
+				<p>
+          Powered by <a href='https://reshuffle.com'>Reshuffle</a>
+        </p>
         </footer>
       </div>
     </div>
-  );
-};
-export default Questionaire;
+	)
+}
+
+export default CreateStartup;
