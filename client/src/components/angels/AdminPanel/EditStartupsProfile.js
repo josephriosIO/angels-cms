@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 import { useAuth0 } from '../../../react-auth0-spa';
 
 const employeesValues = [
@@ -108,7 +109,8 @@ const useStyles = makeStyles(theme => ({
 const EditStartupsProfile = (props) => {
   const classes = useStyles();
   const [errorMsg, setErrorMsg] = useState('');
-  const [errorStatus, setErrorStatus] = useState('');
+	const [errorStatus, setErrorStatus] = useState('');
+	const [reload, setReload] = useState(false);
   const [formProfile, setProfile] = useState({});
   const [form, setForm] = useState({
     companyName: '',
@@ -173,8 +175,11 @@ const EditStartupsProfile = (props) => {
           },
         },
       );
-      setErrorMsg('Saved.');
-      setErrorStatus('success');
+      setErrorMsg('Saved. Redirecting to startups.');
+			setErrorStatus('success');
+			setTimeout(function() {
+				setReload(true);
+			}, 2000);
       handleClick();
     } catch (err) {
       console.error(err);
@@ -188,6 +193,10 @@ const EditStartupsProfile = (props) => {
 
   if (!formProfile) {
     console.error('Profile is empty!');
+	}
+
+	if (reload) {
+    return <Redirect to='/community/startups' />;
   }
 
   return (
