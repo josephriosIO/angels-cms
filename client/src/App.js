@@ -8,9 +8,11 @@ import StartupRoutes from './components/startups/Routes';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import './App.css';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    background: '#f9f9fa !important',
     display: 'flex',
     position: 'absolute',
     left: '50%',
