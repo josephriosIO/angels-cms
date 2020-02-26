@@ -21,6 +21,14 @@ const ProfileSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  facebook: {
+    type: String,
+    default: '',
+  },
+  linkedin: {
+    type: String,
+    default: '',
+  },
 });
 
 module.exports = mongoose.model('angelsProfile', ProfileSchema);

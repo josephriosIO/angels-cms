@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -89,6 +90,18 @@ const useStyles = makeStyles(theme => ({
     position: 'relative',
     marginBottom: '14px',
   },
+  bio: {
+    boxSizing: 'border-box',
+    float: 'left',
+    paddingLeft: '14px',
+    paddingRight: '14px',
+    position: 'relative',
+    marginBottom: '14px',
+    width: '920px',
+    [theme.breakpoints.down(600 + theme.spacing(2) * 2)]: {
+      width: '100%',
+    },
+  },
 }));
 
 const ProfileForm = props => {
@@ -143,26 +156,6 @@ const ProfileForm = props => {
                   />
                 </div>
               </div>
-
-              <div className={classes.columnItem}>
-                <div className={(classes.item, classes.center)}>
-                  <label>Bio</label>
-                </div>
-                <div className={classes.item}>
-                  <TextField
-                    value={form.bio || ''}
-                    onChange={e => onChange(e)}
-                    id='bio'
-                    name='bio'
-                    fullWidth
-                    multiline
-                    rows='6'
-                    variant='outlined'
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={classes.column}>
               <div className={classes.columnItem}>
                 <div className={(classes.item, classes.center)}>
                   <label>Phone Number</label>
@@ -179,6 +172,54 @@ const ProfileForm = props => {
                   />
                 </div>
               </div>
+            </div>
+            <div className={classes.column}>
+              <div className={classes.columnItem}>
+                <div className={(classes.item, classes.center)}>
+                  <label>Linkedin</label>
+                </div>
+                <div className={classes.item}>
+                  <TextField
+                    value={form.linkedin || ''}
+                    onChange={e => onChange(e)}
+                    name='linkedin'
+                    fullWidth
+                    variant='outlined'
+                  />
+                </div>
+              </div>
+              <div className={classes.columnItem}>
+                <div className={(classes.item, classes.center)}>
+                  <label>Facebook</label>
+                </div>
+                <div className={classes.item}>
+                  <TextField
+                    value={form.facebook || ''}
+                    onChange={e => onChange(e)}
+                    name='facebook'
+                    fullWidth
+                    variant='outlined'
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={classes.columnItem} style={{ marginTop: '20px' }}>
+            <div className={(classes.item, classes.center)}>
+              <label>Bio</label>
+            </div>
+            <div>
+              <TextField
+                className={classes.bio}
+                value={form.bio || ''}
+                onChange={e => onChange(e)}
+                id='bio'
+                name='bio'
+                fullWidth
+                multiline
+                rows='12'
+                variant='outlined'
+              />
             </div>
           </div>
         </div>

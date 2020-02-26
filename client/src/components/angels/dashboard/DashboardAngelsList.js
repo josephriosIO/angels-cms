@@ -80,7 +80,13 @@ const DashboardAngelsList = ({ angels }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {angels.map((angel, idx) => (
+              {(rowsPerPage > 0
+                ? angels.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage,
+                  )
+                : angels
+              ).map((angel, idx) => (
                 <DashboardDialogAngelBox
                   key={idx}
                   angel={angel}

@@ -111,7 +111,14 @@ router.post('/startups/update', checkJwt, async (req, res) => {
  * Update user profile data for user thats logged in
  */
 router.post('/', checkJwt, async (req, res) => {
-  const { name, location, phoneNumber, bio } = req.body.form;
+  const {
+    name,
+    location,
+    phoneNumber,
+    bio,
+    facebook,
+    linkedin,
+  } = req.body.form;
   //build profile object
   let profileFields = {};
   profileFields.user = req.user.sub;
@@ -121,6 +128,8 @@ router.post('/', checkJwt, async (req, res) => {
   if (location) profileFields.location = location;
   if (phoneNumber) profileFields.phoneNumber = phoneNumber;
   if (bio) profileFields.bio = bio;
+  if (linkedin) profileFields.linkedin = linkedin;
+  if (facebook) profileFields.facebook = facebook;
   try {
     let profile = await AngelsProfile.findOne({ authId: req.user.sub });
     if (profile) {

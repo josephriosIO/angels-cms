@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import Error from '../../Errors/Error';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -58,16 +58,16 @@ const useStyles = makeStyles(theme => ({
     padding: '28px',
   },
   footer: {
-		textAlign: 'center',
+    textAlign: 'center',
     marginTop: '100px',
   },
 }));
 
 const CreateStartup = () => {
-	const classes = useStyles();
+  const classes = useStyles();
   const [errorMsg, setErrorMsg] = useState('');
-	const [open, setOpen] = useState(false);
-	const [reload, setReload] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [reload, setReload] = useState(false);
   const [errorStatus, setErrorStatus] = useState('');
   const [form, setForm] = useState({
     companyName: '',
@@ -76,12 +76,12 @@ const CreateStartup = () => {
     phoneNumber: '',
     companySize: 0,
     funded: false,
-		website: '',
-		email: '',
+    website: '',
+    email: '',
   });
-	const { getTokenSilently } = useAuth0();
+  const { getTokenSilently } = useAuth0();
 
-	const handleClick = () => {
+  const handleClick = () => {
     setOpen(true);
   };
 
@@ -94,18 +94,20 @@ const CreateStartup = () => {
   };
 
   const handleSubmits = async event => {
-		event.preventDefault();
-		if (form?.companyName === '' ||
-		form?.location === '' ||
-		form?.phoneNumber === '' ||
-		form?.missionStatement === '' ||
-		form?.website === '' ||
-		form?.email === '') {
-			setErrorMsg('Form not completed.');
-			setErrorStatus('error');
-			handleClick();
-			return;
-		}
+    event.preventDefault();
+    if (
+      form?.companyName === '' ||
+      form?.location === '' ||
+      form?.phoneNumber === '' ||
+      form?.missionStatement === '' ||
+      form?.website === '' ||
+      form?.email === ''
+    ) {
+      setErrorMsg('Form not completed.');
+      setErrorStatus('error');
+      handleClick();
+      return;
+    }
     try {
       const token = await getTokenSilently();
       await axios.post(
@@ -119,10 +121,10 @@ const CreateStartup = () => {
       );
       setErrorMsg(`Saved. Redirecting to startups in 3 seconds.`);
       setErrorStatus('success');
-			handleClick();
-			setTimeout(function() {
-				setReload(true);
-			}, 3000);
+      handleClick();
+      setTimeout(function() {
+        setReload(true);
+      }, 3000);
     } catch (err) {
       console.error(err);
       setErrorMsg('error.');
@@ -131,15 +133,15 @@ const CreateStartup = () => {
     }
   };
 
-	const onChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const onChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-	if (reload) {
+  if (reload) {
     return <Redirect to='/community/startups' />;
   }
 
-	return (
+  return (
     <div>
-     <span>
+      <span>
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -162,7 +164,7 @@ const CreateStartup = () => {
       <div className={classes.layout}>
         <div className={classes.formContainer}>
           <form>
-					<div className={classes.flex}>
+            <div className={classes.flex}>
               <label>Company Name</label>
               <TextField
                 value={form.companyName}
@@ -170,8 +172,8 @@ const CreateStartup = () => {
                 name='companyName'
               />
             </div>
-					<div className={classes.flex}>
-              <label>Email</label>
+            <div className={classes.flex}>
+              <label>Founder's Email</label>
               <TextField
                 value={form.email}
                 onChange={e => onChange(e)}
@@ -186,10 +188,10 @@ const CreateStartup = () => {
                 name='website'
               />
             </div>
-						<div className={classes.flex}>
+            <div className={classes.flex}>
               <label>Phone Number</label>
               <TextField
-							  type="number"
+                type='number'
                 value={form.phoneNumber}
                 onChange={e => onChange(e)}
                 name='phoneNumber'
@@ -219,7 +221,10 @@ const CreateStartup = () => {
               </TextField>
             </div>
             <div className={classes.flex}>
-              <label>What is your company's mission statement?</label>
+              <label>
+                What is the company's mission statement if not known leave
+                blank.
+              </label>
               <TextField
                 value={form.missionStatement}
                 onChange={e => onChange(e)}
@@ -231,7 +236,11 @@ const CreateStartup = () => {
             </div>
             <div className={classes.btn}>
               <div>
-                <Button onClick={(e) => handleSubmits(e)} variant='contained' color='primary'>
+                <Button
+                  onClick={e => handleSubmits(e)}
+                  variant='contained'
+                  color='primary'
+                >
                   Submit
                 </Button>
               </div>
@@ -239,13 +248,13 @@ const CreateStartup = () => {
           </form>
         </div>
         <footer className={classes.footer}>
-				<p>
-          Powered by <a href='https://reshuffle.com'>Reshuffle</a>
-        </p>
+          <p>
+            Powered by <a href='https://reshuffle.com'>Reshuffle</a>
+          </p>
         </footer>
       </div>
     </div>
-	)
-}
+  );
+};
 
 export default CreateStartup;

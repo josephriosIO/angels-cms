@@ -36,6 +36,8 @@ const Profile = () => {
           bio: user.data.bio,
           location: user.data.location,
           phoneNumber: user.data.phoneNumber,
+          linkedin: user.data.linkedin,
+          facebook: user.data.facebook,
         });
       } catch (err) {
         console.error(err);
