@@ -3,6 +3,7 @@ const User = require('../models/User');
 const { Roles } = require('../models/Roles');
 const { Votes } = require('../models/Votes');
 const Invite = require('../models/Invite');
+const StartupsInvite = require('../models/StartupsInvite');
 const middleware = require('../middleware/middleware');
 const AngelsProfile = require('../models/AngelsProfile');
 const StartupsProfile = require('../models/StartupsProfile');
@@ -35,108 +36,103 @@ async function checkIfUserHasRole(userId, role) {
  * Admin edit startup profiles
  */
 router.post('/update-startup/profile/:id', checkJwt, async (req, res) => {
-	try {
-		const {companyName, location, website, companySize, missionStatement, phoneNumber } = req.body.form;
-				//build profile object
-				let profileFields = {};
-				profileFields.user = req.params.id;
+  try {
+    const {
+      companyName,
+      location,
+      website,
+      companySize,
+      missionStatement,
+      phoneNumber,
+    } = req.body.form;
+    //build profile object
+    let profileFields = {};
+    profileFields.user = req.params.id;
 
-				profileFields = {};
-				if (companyName) profileFields.companyName = companyName;
-				if (location) profileFields.location = location;
-				if (website) profileFields.website = website;
-				if (phoneNumber) profileFields.phoneNumber = phoneNumber;
-				if (companySize) profileFields.companySize = companySize;
-				if (missionStatement) profileFields.missionStatement = missionStatement;
-				profileFields.completed = true;
-				let profile = await StartupsProfile.findOne({ authId: req.params.id });
-				if (profile) {
-					//update
-					profile = await StartupsProfile.findOneAndUpdate(
-						{ authId: req.params.id },
-						{ $set: profileFields },
-						{ new: true },
-					);
-				} else {
-					profile = new StartupsProfile(profileFields);
-					await profile.save();
-				}
-				return res.status(200).json(profile);
+    profileFields = {};
+    if (companyName) profileFields.companyName = companyName;
+    if (location) profileFields.location = location;
+    if (website) profileFields.website = website;
+    if (phoneNumber) profileFields.phoneNumber = phoneNumber;
+    if (companySize) profileFields.companySize = companySize;
+    if (missionStatement) profileFields.missionStatement = missionStatement;
+    profileFields.completed = true;
+    let profile = await StartupsProfile.findOne({ authId: req.params.id });
+    if (profile) {
+      //update
+      profile = await StartupsProfile.findOneAndUpdate(
+        { authId: req.params.id },
+        { $set: profileFields },
+        { new: true },
+      );
+    } else {
+      profile = new StartupsProfile(profileFields);
+      await profile.save();
+    }
+    return res.status(200).json(profile);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: 'Server Error.' });
+  }
+});
 
-	} catch (err) {
-		console.error(err);
-		return res.status(500).json({msg: 'Server Error.'})
-	}
-})
+/**
+ * Create an invite for users to instantly become an community member
+ */
+router.get('/createinvite', checkJwt, async (req, res) => {
+  try {
+    const inviteCode = uuidv4();
+
+    let code = await Invite.findOne({ value: inviteCode });
+
+    if (code) {
+      return res.status(200).json(code);
+    }
+
+    code = new Invite({
+      createdBy: req.user.sub,
+      value: inviteCode,
+    });
+
+    await code.save();
+    return res.status(200).json(code);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: 'Server Error.' });
+  }
+});
 
 /**
  * Create startup
  */
-router.post('/create-startup', checkJwt, async (req,res) => {
-	try {
-		const sub = uuidv4();
-		const picture = 'none';
-		const { email, companyName, location, website, companySize, missionStatement, phoneNumber } = req.body.form;
-		let user = await User.findOne({ email });
+router.post('/create-startup', checkJwt, async (req, res) => {
+  try {
+    const { email, companyName, website } = req.body.form;
 
-    let allRoles = await Roles.findOne({ authId: sub });
+    const inviteCode = uuidv4();
 
-    if (user && allRoles) {
-      return res.status(200).json(user);
+    let code = await StartupsInvite.findOne({ value: inviteCode });
+
+    if (code) {
+      return res.status(200).json(code);
     }
 
-    allRoles = new Roles({
-      authId: sub,
-      roles: {
-        ADMIN: false,
-        ANGEL: false,
-        STARTUP: true,
-      },
-    });
-
-    user = new User({
-      authId: sub,
-      profileImg: picture,
+    code = new StartupsInvite({
+      createdBy: req.user.sub,
+      value: inviteCode,
       email,
-      name: companyName,
+      website,
+      companyName,
     });
 
-    await allRoles.save();
-		await user.save();
+    await code.save();
 
-		// create startup profile
-
-		//build profile object
-		let profileFields = {};
-		profileFields.user = sub;
-
-		profileFields = {};
-		if (sub) profileFields.authId = sub;
-		if (companyName) profileFields.companyName = companyName;
-		if (location) profileFields.location = location;
-		if (website) profileFields.website = website;
-		if (phoneNumber) profileFields.phoneNumber = phoneNumber;
-		if (companySize) profileFields.companySize = companySize;
-		if (missionStatement) profileFields.missionStatement = missionStatement;
-		profileFields.completed = true;
-		let profile = await StartupsProfile.findOne({ authId: sub });
-		if (profile) {
-			//update
-			profile = await StartupsProfile.findOneAndUpdate(
-				{ authId: sub },
-				{ $set: profileFields },
-				{ new: true },
-			);
-		} else {
-			profile = new StartupsProfile(profileFields);
-			await profile.save();
-		}
-    return res.status(200).json(user);
-	} catch (err) {
-		console.error(err);
-		return res.status(500).json({msg: 'Server Error.'});
-	}
-})
+    return res.status(200).json(inviteCode);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: 'Server Error.' });
+  }
+});
 
 /**
  * Add angel role to user based on the users ID
@@ -421,13 +417,11 @@ router.get('/users', checkJwt, async (req, res) => {
       return authId;
     });
 
-
     if (userIds.length < 1) {
       return res.status(200).json([]);
     }
 
     const usersQuery = await User.find({});
-
 
     const userArr = [];
     usersQuery.forEach(user => {
@@ -461,32 +455,6 @@ router.get('/getroles/:id', checkJwt, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
-  }
-});
-
-/**
- * Create an invite for users to instantly become an community member
- */
-router.get('/createinvite', checkJwt, async (req, res) => {
-  try {
-    const inviteCode = uuidv4();
-
-    let code = await Invite.findOne({ value: inviteCode });
-
-    if (code) {
-      return res.status(200).json(code);
-    }
-
-    code = new Invite({
-      createdBy: req.user.sub,
-      value: inviteCode,
-    });
-
-    await code.save();
-    return res.status(200).json(code);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ msg: 'Server Error.' });
   }
 });
 

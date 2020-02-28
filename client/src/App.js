@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import LandingPage from './components/landingpage/LandingPage';
 import Routes from './components/angels/Routes';
 import AngelInvite from './components/angels/AdminPanel/AngelInvite';
+import StartupInvite from './components/angels/AdminPanel/StartupInvite';
 import StartupRoutes from './components/startups/Routes';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,6 +43,7 @@ function App() {
         <Route path='/community' component={Routes} />
         <Route path='/startups' component={StartupRoutes} />
         <Route exact path={`/invite/:id`} component={AngelInvite} />
+        <Route exact path={`/startuplogin/:id`} component={StartupInvite} />
         <Route exact path='/' component={LandingPage} />
       </Switch>
     </ConfirmProvider>
