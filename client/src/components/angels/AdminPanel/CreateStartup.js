@@ -284,52 +284,7 @@ const CreateStartup = () => {
                 name='website'
               />
             </div>
-            <div className={classes.flex}>
-              <label>Phone Number</label>
-              <TextField
-                type='number'
-                value={form.phoneNumber}
-                onChange={e => onChange(e)}
-                name='phoneNumber'
-              />
-            </div>
-            <div className={classes.flex}>
-              <label>Location</label>
-              <TextField
-                value={form.location}
-                onChange={e => onChange(e)}
-                name='location'
-              />
-            </div>
-            <div className={classes.flex}>
-              <label># of Employees</label>
-              <TextField
-                value={form.companySize}
-                onChange={e => onChange(e)}
-                name='companySize'
-                select
-              >
-                {employeesValues.map(option => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-            <div className={classes.flex}>
-              <label>
-                What is the company's mission statement if not known leave
-                blank.
-              </label>
-              <TextField
-                value={form.missionStatement}
-                onChange={e => onChange(e)}
-                name='missionStatement'
-                multiline
-                rows='4'
-                variant='outlined'
-              />
-            </div>
+
             <div className={classes.btn}>
               <div>
                 <Button
@@ -338,7 +293,7 @@ const CreateStartup = () => {
                   color='primary'
                   ref={textAreaRef}
                 >
-                  Submit and copy founders login link
+                  Submit
                 </Button>
               </div>
             </div>
